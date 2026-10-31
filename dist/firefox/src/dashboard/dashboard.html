@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UIU Portal Monitor — Academic Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="theme-system">
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="app-name">UIU Monitor</span>
+          <span class="app-version">v1.0.0</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-tab="overview">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+          </svg>
+          <span>Overview</span>
+        </button>
+        <button class="nav-item" data-tab="courses">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+          <span>Course Materials</span>
+        </button>
+        <button class="nav-item" data-tab="notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+          <span>Notifications</span>
+          <span class="nav-badge" id="navBadgeUnread">0</span>
+        </button>
+        <button class="nav-item" data-tab="scans">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>Scan History</span>
+        </button>
+        <button class="nav-item" data-tab="settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="security-tag">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          Zero Credential Storage
+        </span>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Action Bar -->
+      <header class="content-header">
+        <div>
+          <h1 class="page-title" id="pageTitle">Dashboard Overview</h1>
+          <p class="page-subtitle" id="pageSubtitle">Real-time status of UIU academic portals</p>
+        </div>
+        <div class="header-buttons">
+          <button id="dashBtnCheckNow" class="btn btn-primary">
+            <span class="btn-spinner" id="dashBtnSpinner" style="display: none;"></span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            <span id="dashBtnCheckText">Scan Now</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB 1: OVERVIEW -->
+      <section class="tab-pane active" id="tabOverview">
+        <!-- Status Cards -->
+        <div class="overview-grid">
+          <!-- UCAM Card -->
+          <div class="portal-stat-card">
+            <div class="card-head">
+              <div class="portal-tag">
+                <span class="tag-name">UCAM Portal</span>
+                <span class="tag-status" id="dashUcamStatus">Checking...</span>
+              </div>
+              <a href="https://ucam.uiu.ac.bd/Security/LogIn.aspx" target="_blank" class="external-portal-btn" rel="noreferrer">
+                Official Login &rarr;
+              </a>
+            </div>
+            <div class="card-stats">
+              <div class="stat-col">
+                <span class="stat-num" id="dashUcamItems">0</span>
+                <span class="stat-lbl">Notices/Items</span>
+              </div>
+              <div class="stat-col">
+                <span class="stat-num" id="dashUcamBaseline">No</span>
+                <span class="stat-lbl">Baseline Ready</span>
+              </div>
+              <div class="stat-col">
+                <span class="stat-val" id="dashUcamLastSuccess">Never</span>
+                <span class="stat-lbl">Last Sync</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- eLMS Card -->
+          <div class="portal-stat-card">
+            <div class="card-head">
+              <div class="portal-tag">
+                <span class="tag-name">eLMS (Moodle)</span>
+                <span class="tag-status" id="dashElmsStatus">Checking...</span>
+              </div>
+              <a href="https://elms.uiu.ac.bd/login/index.php" target="_blank" class="external-portal-btn" rel="noreferrer">
+                Official Login &rarr;
+              </a>
+            </div>
+            <div class="card-stats">
+              <div class="stat-col">
+                <span class="stat-num" id="dashElmsItems">0</span>
+                <span class="stat-lbl">Course Materials</span>
+              </div>
+              <div class="stat-col">
+                <span class="stat-num" id="dashElmsBaseline">No</span>
+                <span class="stat-lbl">Baseline Ready</span>
+              </div>
+              <div class="stat-col">
+                <span class="stat-val" id="dashElmsLastSuccess">Never</span>
+                <span class="stat-lbl">Last Sync</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity Feed -->
+        <div class="content-box">
+          <div class="box-header">
+            <h2 class="box-title">Recent Academic Activity</h2>
+            <span class="box-badge" id="activityCount">0 items</span>
+          </div>
+          <div class="activity-feed" id="activityFeed">
+            <div class="empty-state">No materials scanned yet. Click "Scan Now" to run initial check.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: COURSE MATERIALS -->
+      <section class="tab-pane" id="tabCourses" style="display: none;">
+        <div class="content-box">
+          <div class="box-header">
+            <h2 class="box-title">Course Materials by Subject</h2>
+            <input type="text" id="courseSearchInput" class="filter-input" placeholder="Search course or material title...">
+          </div>
+          <div class="courses-container" id="coursesContainer">
+            <div class="empty-state">No course materials discovered.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: NOTIFICATIONS -->
+      <section class="tab-pane" id="tabNotifications" style="display: none;">
+        <div class="content-box">
+          <div class="box-header">
+            <h2 class="box-title">Notifications History</h2>
+            <div class="box-actions">
+              <select id="filterPortal" class="filter-select">
+                <option value="">All Portals</option>
+                <option value="ucam">UCAM</option>
+                <option value="elms">eLMS</option>
+              </select>
+              <select id="filterCategory" class="filter-select">
+                <option value="">All Categories</option>
+                <option value="academicNotices">Academic Notices</option>
+                <option value="newResources">New Resources</option>
+                <option value="assignments">Assignments</option>
+                <option value="quizzes">Quizzes</option>
+                <option value="deadlineChanges">Deadline Changes</option>
+              </select>
+              <button id="btnMarkAllRead" class="btn btn-secondary">Mark All as Read</button>
+            </div>
+          </div>
+          <div class="notifications-table-wrapper" id="notificationsList">
+            <div class="empty-state">No notifications recorded.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: SCAN HISTORY -->
+      <section class="tab-pane" id="tabScans" style="display: none;">
+        <div class="content-box">
+          <div class="box-header">
+            <h2 class="box-title">System Scan Logs</h2>
+            <span class="box-badge">Last 20 Runs</span>
+          </div>
+          <div class="scans-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Portal</th>
+                  <th>Started</th>
+                  <th>Status</th>
+                  <th>Items Scanned</th>
+                  <th>New Items</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody id="scansTableBody">
+                <tr><td colspan="6" class="empty-cell">No scan history recorded yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: SETTINGS -->
+      <section class="tab-pane" id="tabSettings" style="display: none;">
+        <div class="settings-grid">
+          <!-- Monitoring Preferences -->
+          <div class="content-box">
+            <div class="box-header">
+              <h2 class="box-title">Monitoring Schedule</h2>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="setting-title">Enable Periodic Monitoring</div>
+                <div class="setting-desc">Check portals automatically in the background while browser is running</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="prefMonitoringEnabled" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="setting-title">Scan Frequency Interval</div>
+                <div class="setting-desc">Recommended default: 30 minutes</div>
+              </div>
+              <select id="prefIntervalMinutes" class="filter-select">
+                <option value="15">15 Minutes</option>
+                <option value="30" selected>30 Minutes (Default)</option>
+                <option value="60">60 Minutes (1 Hour)</option>
+                <option value="120">120 Minutes (2 Hours)</option>
+              </select>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="setting-title">Monitor UCAM</div>
+                <div class="setting-desc">Notices and class routines from ucam.uiu.ac.bd</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="prefUcamEnabled" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="setting-title">Monitor eLMS</div>
+                <div class="setting-desc">Course slides, resources, assignments, and quizzes from elms.uiu.ac.bd</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="prefElmsEnabled" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Notification Categories -->
+          <div class="content-box">
+            <div class="box-header">
+              <h2 class="box-title">Notification Alerts</h2>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="setting-title">Desktop Notifications</div>
+                <div class="setting-desc">Show OS notification banner on new items</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="prefDesktopNotif" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="setting-title">Study Resources & Slides</div>
+                <div class="setting-desc">PDFs, lecture notes, lecture recordings</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="prefCatResources" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="setting-title">Assignments & Quizzes</div>
+                <div class="setting-desc">New homework submissions and online quizzes</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="prefCatAssignments" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="setting-title">Deadline Shifts & Rescheduling</div>
+                <div class="setting-desc">High priority alerts when due dates are extended or changed</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="prefCatDeadlines" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="setting-title">Theme Appearance</div>
+                <div class="setting-desc">Match system dark mode or select manually</div>
+              </div>
+              <select id="prefTheme" class="filter-select">
+                <option value="system">System Default</option>
+                <option value="light">Light Theme</option>
+                <option value="dark">Dark Theme</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Maintenance and Storage Management -->
+          <div class="content-box full-width">
+            <div class="box-header">
+              <h2 class="box-title">Storage & Baseline Controls</h2>
+            </div>
+            <div class="danger-zone">
+              <div class="danger-item">
+                <div>
+                  <div class="setting-title">Reset UCAM Baseline</div>
+                  <div class="setting-desc">Clears UCAM item snapshot cache. Next scan will rebuild baseline without alerting.</div>
+                </div>
+                <button id="btnResetUcamBaseline" class="btn btn-warning">Reset UCAM</button>
+              </div>
+              <div class="danger-item">
+                <div>
+                  <div class="setting-title">Reset eLMS Baseline</div>
+                  <div class="setting-desc">Clears eLMS item snapshot cache. Next scan will rebuild baseline without alerting.</div>
+                </div>
+                <button id="btnResetElmsBaseline" class="btn btn-warning">Reset eLMS</button>
+              </div>
+              <div class="danger-item">
+                <div>
+                  <div class="setting-title">Clear Local Database</div>
+                  <div class="setting-desc">Removes all stored notifications, item records, and scan history from IndexedDB.</div>
+                </div>
+                <button id="btnClearAllHistory" class="btn btn-danger">Clear All History</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
