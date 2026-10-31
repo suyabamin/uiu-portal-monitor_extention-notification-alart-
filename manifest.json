@@ -1,0 +1,55 @@
+{
+  "manifest_version": 3,
+  "name": "UIU Portal Monitor",
+  "version": "1.0.0",
+  "description": "A local-first, zero-credential academic material and notice monitor for UIU UCAM and eLMS portals.",
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "32": "assets/icons/icon32.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "action": {
+    "default_title": "UIU Portal Monitor",
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon16.png",
+      "32": "assets/icons/icon32.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
+    }
+  },
+  "permissions": [
+    "alarms",
+    "storage",
+    "notifications"
+  ],
+  "host_permissions": [
+    "https://ucam.uiu.ac.bd/*",
+    "https://elms.uiu.ac.bd/*"
+  ],
+  "background": {
+    "service_worker": "src/background/service_worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://ucam.uiu.ac.bd/*"
+      ],
+      "js": [
+        "src/content/ucam.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://elms.uiu.ac.bd/*"
+      ],
+      "js": [
+        "src/content/elms.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

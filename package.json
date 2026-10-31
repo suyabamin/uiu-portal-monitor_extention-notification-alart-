@@ -1,0 +1,29 @@
+{
+  "name": "uiu-portal-monitor",
+  "version": "1.0.0",
+  "description": "A local-first, cross-browser WebExtension for monitoring authorized UIU UCAM and eLMS pages for new academic materials and meaningful changes.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "node scripts/build.js"
+  },
+  "keywords": [
+    "browser-extension",
+    "uiu",
+    "portal-monitor",
+    "ucam",
+    "elms"
+  ],
+  "author": "UIU Portal Monitor Contributors",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "fake-indexeddb": "^6.2.7",
+    "jsdom": "^30.1.3",
+    "vitest": "^5.0.5"
+  }
+}
